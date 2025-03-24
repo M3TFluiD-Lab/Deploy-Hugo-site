@@ -27,17 +27,24 @@ jobs:
       - name: Build Hugo site
         run: hugo --minify  # This generates the site in the 'public/' directory
 
-      # Step 4: Copy the built site from the 'public' directory to the root directory
+      # Step 4: Ensure the public folder exists before copying
+      - name: Check if public folder exists
+        run: |
+          ls -l ./public
+
+      # Step 5: Copy files from 'public/' directory to root directory
       - name: Copy Hugo files to root
         run: |
           cp -r ./public/* ./  # Copy all files from the 'public/' folder to root
+          ls -l .  # Verify the copied files
 
-      # Step 5: Commit and push changes to the repository
+      # Step 6: Commit and push changes to the repository
       - name: Commit and push to main
         run: |
           git config --global user.name "GitHub Actions"  # Set commit author name
           git config --global user.email "actions@github.com"  # Set commit author email
           git add .  # Add all changes (newly copied files)
+          git status  # Check which files are staged
           git commit -m "Deploy Hugo site to root"  # Commit the changes
           git push origin main  # Push changes to the main branch
         env:
