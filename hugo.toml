@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://m3tfluid-lab.github.io/home/'
 languageCode = 'en-us'
 title = 'M3TFluid Lab'
 theme = 'Ananke'

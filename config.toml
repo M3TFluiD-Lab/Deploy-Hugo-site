@@ -1,0 +1,52 @@
+# Hugo configuration file
+
+# Basic site settings
+baseURL = "https://m3tfluid-lab.github.io/home/"
+languageCode = "en-us"
+title = "M3TFluid Lab"
+theme = "Ananke"  # Replace with the name of your theme
+author = "Your Name"
+description = "Your site description"
+
+# Enable or disable the theme
+[params]
+  # Optional custom parameters for the theme
+  customParam1 = "value1"
+  customParam2 = "value2"
+
+# Optional: set up a menu for navigation
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "Blog"
+    url = "/posts/"
+    weight = 2
+
+  [[menu.main]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 3
+
+# Enable or disable RSS feed
+[params.rss]
+  enable = true
+
+# Optional: configure social links
+[params.social]
+  twitter = "your_twitter_handle"
+  github = "m3tfluid-lab"
+
+# Enable/Disable pagination (if your theme supports it)
+paginate = 10  # Set the number of posts per page
+
+# Optional: enable/disbale Disqus comments
+[params.disqus]
+  shortname = "your_disqus_shortname"
+
+# Theme-specific settings (if your theme requires additional settings)
+[params.themeSpecific]
+  customSetting = "value"
