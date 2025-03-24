@@ -10,8 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+<<<<<<< HEAD
       # Step 1: Checkout the repository
       - name: Checkout the code
+=======
+      - name: Checkout repository
+>>>>>>> 099530fc84058a9bc8bd824b70a210093c042ae7
         uses: actions/checkout@v3
         with:
           submodules: true
@@ -23,6 +27,7 @@ jobs:
         with:
           hugo-version: 'latest'
 
+<<<<<<< HEAD
       # Step 3: Build the Hugo site
       - name: Build Hugo site
         run: hugo --minify  # This generates the site in the 'public/' directory
@@ -47,3 +52,21 @@ jobs:
           git push origin main  # Push changes to the main branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token to authenticate
+=======
+      - name: Build Hugo site
+        run: hugo --minify
+
+      - name: Copy to root directory
+        run: |
+          cp -r ./public/* ./
+          
+      - name: Commit and push to main
+        run: |
+          git config --global user.name "Your GitHub Username"
+          git config --global user.email "your-email@example.com"
+          git add .
+          git commit -m "Deploy Hugo site"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+>>>>>>> 099530fc84058a9bc8bd824b70a210093c042ae7
