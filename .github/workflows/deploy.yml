@@ -1,30 +1,49 @@
-name: Deploy-Hugo-site
+name: Deploy Hugo Site to Root
 
 on:
   push:
     branches:
-      - main
+      - main  # Deploy when pushing to the main branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v3
+      # Step 1: Checkout the repository
+      - name: Checkout the code
+        uses: actions/checkout@v3
         with:
           submodules: true
           fetch-depth: 0
 
+      # Step 2: Install Hugo
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: 'latest'
 
-      - name: Build
-        run: hugo --minify
+      # Step 3: Build the Hugo site
+      - name: Build Hugo site
+        run: hugo --minify  # This generates the site in the 'public/' directory
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          branch: main # Ensure it pushes to the main branch, not gh-pages
+      # Step 4: Clean up the root directory (optional)
+      - name: Clean up the root directory
+        run: |
+          rm -rf *  # Optional: this deletes all files in the root before copying new files
+
+      # Step 5: Copy files from 'public/' directory to the root
+      - name: Copy Hugo files to root
+        run: |
+          cp -r ./public/* ./  # Copy all files from the 'public/' folder to root
+
+      # Step 6: Commit and push the changes back to the repository
+      - name: Commit and push to main
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add .  # Add all changes (newly copied files)
+          git commit -m "Deploy Hugo site to root"  # Commit the changes
+          git push origin main  # Push changes to the main branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub token to authenticate
